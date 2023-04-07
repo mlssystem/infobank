@@ -15,10 +15,9 @@
     <title>Pesquisar Banco de Dados</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="imagem do icone">
 </head>
-<body>
-
-    <h1 class="animacao-1">InfoBankData!</h1>
-    <h2 class="animacao-">Pesquisar Bancos de Dados</h2>
+<body class="body-ajust">
+    <!--<h1 class="animacao-1">InfoBankData!</h1>-->
+    <h1 class="animacao-">Pesquisar Bancos de Dados</h1>
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>
@@ -29,17 +28,9 @@
     </nav>
 
     <form method="POST" action="">
-
         <?php
             // BUSCAR DADOS DO BANCO
             $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-            // SESSION
-            if(isset($_SESSION['msg'])){
-                echo $_SESSION['msg'];
-                unset($_SESSION['msg']);
-            }
-
             // SE NÃO TIVER PESQUISADO NADA MOSTRA CAMPOS VAZIOS
             $texto_pesquisar = "";
             // SE TIVER PESQUISADO DEIXAR CAMPO PREENCHIDO
@@ -50,7 +41,6 @@
         <label>Pesquisar</label>
         <!-- INCLUIR $texto_pesquisar EM VALUE PARA DEIXAR CAMPO PREENCHIDO SE JA TIVER SIDO PESQUISADO -->
         <input type="text" name="texto_pesquisar" value="<?php echo $texto_pesquisar; ?>" placeholder="Pesquisar pelo termo?">
-
         <input type="submit" value="Pesquisar" name="PesqUsuario"><br><br>
     </form>
 
@@ -62,6 +52,7 @@
                 <th class='list-head-content table-sm-none'>USUÁRIO</th>
                 <th class='list-head-content table-sm-none'>SENHA</th>
                 <th class='list-head-content table-md-none'>LOCALHOST</th>
+                <th class='list-head-content table-md-none'>MODIFICADO</th>
                 <th class='list-head-content table-md-none'>AÇÕES</th>
             </tr>
         </thead>
@@ -73,13 +64,10 @@
                 * ANTES OU DEPOIS DA PALAVRA PESQUISADA
                 */ 
                 $nome_banco = "%" . $dados['texto_pesquisar'] . "%";
-
-                $query_sistema = "SELECT id, nome_banco, usuario, senha, localhost FROM bancos_dados WHERE nome_banco LIKE :nome_banco ORDER BY id DESC";
-
+                $query_sistema = "SELECT id, nome_banco, usuario, senha, localhost, modified FROM bancos_dados WHERE nome_banco LIKE :nome_banco ORDER BY id DESC";
                 $result_sistema = $conn->prepare($query_sistema);
                 $result_sistema->bindParam(':nome_banco', $nome_banco, PDO::PARAM_STR);
                 $result_sistema->execute();
-
                 while($row_sistema = $result_sistema->fetch(PDO::FETCH_ASSOC)){
                     extract($row_sistema);
                     echo "<tbody class='corpo-tabela-cad'>";
@@ -89,10 +77,11 @@
                             echo "<td class='table-sm-none'>$usuario</td>";
                             echo "<td class='table-sm-none'>$senha </td>";
                             echo "<td class='table-md-none'>$localhost</td>";
+                            echo "<td>" . date('d/m/Y H:i:s', strtotime($modified)) . " </td>";
                             echo "<td class='btn-acoes'>";
-                            echo "<a href='cadastro-ban.php?id_usuario=$id'><button class='btn-editar'><img src='img/icones/adicionar-usuáriov.png' title='Cadastrar novo Sistema' alt='Cadastrar novo Sistema'></button></a>";
+                            echo "<a href='cadastro-ban.php'><button class='btn-editar'><img src='img/icones/adicionar-usuáriov.png' title='Cadastrar novo Sistema' alt='Cadastrar novo Sistema'></button></a>";
                             echo "<a href='editar-ban.php?id_usuario=$id'><button class='btn-editar'><img src='img/icones/editar-fille.png' title='Editar novo Sistema' alt='Editar novo Sistema'></button></a>";
-                            echo "<a href='apagar-ban.php?id_usuario=$id'><button class='btn-editar'><img src='img/icones/excluir-fille.png' title='Excluir Sistema' alt='Cadastrar novo Sistema'></button></a>";
+                            echo "<a href='apagar-ban.php?id_usuario=$id' . onclick='return confirm(\"Tem certeza que deseja excluir este registro?\")'><button class='btn-editar'><img src='img/icones/excluir-fille.png' title='Excluir Sistema' alt='Cadastrar novo Sistema'></button></a>";
                             echo "</td>";
                         echo "</tr>";
                     echo "</tbody>";
@@ -102,5 +91,4 @@
     </table>
 
 </body>
-
 </html>   

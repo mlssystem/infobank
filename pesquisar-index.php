@@ -15,10 +15,9 @@
     <title>Pesquisar Geral</title>
     <link rel="shortcut icon" href="img/favicon.ico" type="imagem do icone">
 </head>
-<body>
-
-    <h1 class="animacao-1">InfoBankData!</h1>
-    <h2 class="animacao-">Pesquisar Geral</h2>
+<body class="body-ajust">
+    <!--<h1 class="animacao-1">InfoBankData!</h1>-->
+    <h1 class="animacao-">Pesquisar Geral</h1>
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>
@@ -27,16 +26,9 @@
     </nav>
 
     <form method="POST" action="">
-
         <?php
             // BUSCAR DADOS DO BANCO
             $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-
-            // SESSION
-            if(isset($_SESSION['msg'])){
-                echo $_SESSION['msg'];
-                unset($_SESSION['msg']);
-            }
 
             // SE NÃO TIVER PESQUISADO NADA MOSTRA CAMPOS VAZIOS
             $texto_pesquisar = "";
@@ -48,7 +40,6 @@
         <label>Pesquisar</label>
         <!-- INCLUIR $texto_pesquisar EM VALUE PARA DEIXAR CAMPO PREENCHIDO SE JA TIVER SIDO PESQUISADO -->
         <input type="text" name="texto_pesquisar" value="<?php echo $texto_pesquisar; ?>" placeholder="Pesquisar pelo termo?">
-
         <input type="submit" value="Pesquisar" name="PesqUsuario"><br><br>
     </form>
 
@@ -66,7 +57,6 @@
                 <th>MODIFICAÇÃO</th>
             </tr>
         </thead>
-
         <?php
             if (!empty($dados['PesqUsuario'])) {
                 /* 
@@ -74,13 +64,19 @@
                 * ANTES OU DEPOIS DA PALAVRA PESQUISADA
                 */ 
                 $nome_sis = "%" . $dados['texto_pesquisar'] . "%";
-
-                $query_sistemas = "SELECT sis.id  As id_sis, sis.nome AS nome_sis, sis.linguagem AS linguagem_sis, sis.descricao AS descricao_sis, sis.banco_dado_id AS banco_dado_id_sis, sis.created AS created_sis, sis.modified AS modified_sis, ban.id AS id_ban, ban.nome_banco AS nome_banco_ban, ban.usuario AS usuario_ban FROM sistemas AS sis INNER JOIN bancos_dados AS ban ON ban.id=sis.banco_dado_id WHERE sis.nome LIKE :nome_sis ORDER BY id_sis ASC ";
-
+                $query_sistemas = "SELECT sis.id  As id_sis, sis.nome AS nome_sis, sis.linguagem_id AS linguagem_id_sis, sis.descricao_id AS descricao_id_sis, sis.banco_dado_id AS banco_dado_id_sis, sis.created AS created_sis, sis.modified AS modified_sis, ban.id AS id_ban, ban.nome_banco AS nome_banco_ban, ban.usuario AS usuario_ban,
+                                        lgm.name AS name_lgm,
+                                        dcc.name AS name_dcc
+                                        FROM sistemas AS sis 
+                                        INNER JOIN bancos_dados AS ban ON ban.id=sis.banco_dado_id 
+                                        INNER JOIN linguagem AS lgm ON lgm.id=sis.linguagem_id 
+                                        INNER JOIN descricao AS dcc ON dcc.id=sis.descricao_id 
+                                        WHERE sis.nome 
+                                        LIKE :nome_sis 
+                                        ORDER BY id_sis ASC ";
                 $result_sistemas = $conn->prepare($query_sistemas);
                 $result_sistemas->bindParam(':nome_sis', $nome_sis, PDO::PARAM_STR);
                 $result_sistemas->execute();
-
                 while($row_sistema = $result_sistemas->fetch(PDO::FETCH_ASSOC)){
                     extract($row_sistema);
                     echo "<tbody class='corpo-tabela-cad'>";
@@ -90,8 +86,8 @@
                             echo "<td>$banco_dado_id_sis</td>";
                             echo "<td>$nome_banco_ban</td>";
                             echo "<td>$usuario_ban</td>";
-                            echo "<td>$descricao_sis</td>";
-                            echo "<td>$linguagem_sis</td>";
+                            echo "<td>$name_dcc</td>";
+                            echo "<td>$name_lgm</td>";
                             echo "<td>" . date('d/m/Y H:i:s', strtotime($created_sis)) . " </td>";
                             echo "<td>" . date('d/m/Y H:i:s', strtotime($modified_sis)) . "</td>";
                         echo "</tr>";
@@ -102,5 +98,4 @@
     </table>
 
 </body>
-
 </html>   

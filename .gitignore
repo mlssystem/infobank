@@ -1,0 +1,17 @@
+# ignore TODOS os arquivos .log
+*.log
+*.bat
+
+# ignora TODOS os arquivos em QUALQUER diretório
+utils/
+teste/
+db/
+# export-ignore
+.editorconfig export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+
+# icone
+desktop.ini
+git.lnk
+.lnk

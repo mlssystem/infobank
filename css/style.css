@@ -3,8 +3,8 @@
 /*font-family: 'Fira Mono', monospace;*/
 * {padding: 0; margin: 0; box-sizing: border-box; overflow: auto;}
 :root {--color-text-1: #121212; --color-text-2: #f2f2f2; --cinza-claro: #c3c3c3; --fundo-claro: #f2f2f2; --vermelho: #f00; --amarelo: #ff0;}
-body {margin: 14px; padding: 14px; color: var(--color-text-2); background-image: url(fundo-site.jpg); background-repeat: no-repeat; background-size: cover;}
-.body-cad {width: 80%; margin: auto;}
+body {margin: 14px; padding: 14px; color: var(--color-text-2); background: linear-gradient(20DEG, #525254, #000000, #343331); background-repeat: no-repeat; background-size: cover;}
+.body-ajust {background: linear-gradient(20DEG, #525254, #000000, #343331); background-repeat: no-repeat; height: 100vh; width: 80%; margin: 0 auto;}
 nav {display: flex; flex-direction: row; justify-content: flex-end; margin-bottom: 7px;}
 @media screen and (max-width: 890px) {nav {display: flex; flex-wrap: wrap; justify-content: flex-start;}
 }
@@ -25,15 +25,19 @@ width: 100%; text-align: center; margin: auto; margin: 0;}
 table, td, th  {border: solid 1px; border-collapse: collapse; padding: 5px;}
 .conteudo-titulo-tabela {background-color: var(--cinza-claro); color: var(--color-text-1);}
 input.input-form-cad {display: flex; flex-direction: column; justify-content: center; width: 100%; padding: 7px;}
+select.input-form-cad {width: 500px; padding: 7px;}
+.cont-form {display:flex; flex-direction: row; flex-wrap: wrap; margin-bottom: 10px; justify-content: space-between;}
+@media (max-width:780px) {.cont-form .align-cont-form>select {padding: 7px 0;}}
+.cont-form .align-cont-form {display: flex; flex-direction: column; justify-content: center; width: 500px; padding: 7px;}
 .btn{padding: 7px; border-radius: 7px; border: none; cursor: pointer; transition: all 0.5s ease;}
 .btn-acoes {display: flex; flex-direction: row; align-items:center; justify-content: center;}
 .btn-acoes-ban a{display: flex; flex-direction: row !important; align-items:center; justify-content: center;}
 .btn-editar{padding: 3px; margin: 0 3px; border-radius: 7px; border: none; cursor: pointer; transition: all 0.5s ease;}
 .btn-form {margin: 20px 0;}
-.btn-index{padding: 7px; margin: 7px 5px 7px 0; border-radius: 7px; border: none; cursor: pointer; transition: all 0.5s ease;}
+.btn-index{transition: all 0.5s ease; padding: 7px; margin: 7px 5px 7px 0; border-radius: 7px; border: none; cursor: pointer; transition: all 0.5s ease;}
 .campo-obrigatorio {color: var(--amarelo);}
 .div-ajuda > p {display: flex; align-items: center; opacity: .8;}
 .img-ajuda {margin-right: 7px;}
 .pesquisar, a {display: flex; align-items: center; color: var(--color-text-2); text-decoration: none; padding: 3px;}
-.active, .btn:hover{background-color: transparent; transition: all 0.8s ease; color: var(--color-text-2); border: 1px solid #f2f2f2;}
+.active, .btn:hover{transition: all 0.5s ease; background-color: transparent; transition: all 0.8s ease; color: var(--color-text-2); border: 1px solid #f2f2f2;}
 .active, .btn-index:hover{background-color: transparent; transition: all 0.8s ease; color: var(--color-text-2); border: 1px solid #f2f2f2;}

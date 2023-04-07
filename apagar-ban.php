@@ -10,20 +10,19 @@
             $apagar_banco = $conn->prepare($query_banco);
             $apagar_banco->bindParam(':id', $id_usuario, PDO::PARAM_INT);
             if ($apagar_banco->execute()) {
-                $_SESSION['msg'] = "<p style='color: yellow;'>Banco apagado com sucesso!</p>";
-                header("Location: banco-dados.php");
-            } else {
-                //$_SESSION['msg'] = "<p style='color: yellow;'>Erro: Banco não foi apagado!</p>";
-                //$_SESSION['msg'] = "<p style='color: yellow;'>Erro: Try bloco. Erro gerado: " . $erro->getMessage() . " </p>";
-                header("Location: esquisar.php");
+            $_SESSION['msgb'] = "<p style='color: yellow;'>banco-dados apagada com sucesso!</p>";
+            header("Location: banco-dados.php");
+        } else {
+            $_SESSION['msgb'] = "<p style='color: #f00;'>Erro: banco-dados não apagada com sucesso!</p>";
+            header("Location: banco-dados.php");
+            //$_SESSION['msgs'] = "<p style='color: yellow;'>Erro: banco-dados não foi apagado. Erro gerado: " . $erro->getMessage() . " </p>";
             }
         } catch (PDOException $erro) {
-            $_SESSION['msg'] = "<p style='color: yellow;'>Erro: Banco não foi apagado!</p>";
-            //$_SESSION['msg'] = "<p style='color: yellow;'>Erro: Catch.<br> Erro gerado: " . $erro->getMessage() . " </p>";
+        $_SESSION['msgb'] = "<p style='color: #ff0; font-size: 18px; background-color: #000; border-radius:7px; padding:5px;'><img class='img-ajuda' src='img/icones/informacao.png' title='Ajuda' alt='Ajuda'>Erro: O banco de dados não pode ser apagado se estiver vinculada a um sistema!</p>";
             header("Location: banco-dados.php");
         }
     } else {
-        $_SESSION['msg'] = "<p style='color: yellow;'>Erro: If id_user!</p>";
-        header("Location: esquisar.php");
+        $_SESSION['msgb'] = "<p style='color: yellow;'>Erro: Banco de dados não encontrado!</p>";
+        header("Location: banco-dados.php");
     }
 ?>    

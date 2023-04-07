@@ -1,7 +1,6 @@
 <?php
     session_start();
     include_once "conexao.php";
-    ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -17,16 +16,13 @@
     <link rel="shortcut icon" href="img/favicon.ico" type="imagem do icone">
 </head>
 <body>
-
-    <h1 class="animacao-1">InfoBankData!</h1>
-    <h2 class="animacao-1">Sistemas Desenvolvidos</h2>
+    <h1 class="animacao-">InfoBankData!</h1>
+    <h2 class="animacao-">Sistemas Desenvolvidos</h2>
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>
-        <a href="sistemas.php"><button class="btn-index active">Sistemas</button></a>
-        <!--<a href="cadastro-sis.php"><button class="btn-index">Cadastrar Novo Sistema</button></a>-->
+        <a><button class="btn-index active">Sistemas</button></a>
         <a href="banco-dados.php"><button class="btn-index">Banco de Dados</button></a>
-        <!--<a href="cadastro-ban.php"><button class="btn-index">Cadastrar Novo Banco</button></a>-->
     </nav>
 
     <div class="pesquisar">
@@ -38,51 +34,50 @@
             <tr class="conteudo-titulo-tabela">
                 <th class='list-head-content'>ID</th>
                 <th class='list-head-content'>NOME do SISTEMA</th>
-                <th class='list-head-content'>ID BANCO</th>
+                <th class='list-head-content'>BANCO DADOS</th>
                 <th class='list-head-content'>DESCRIÇÃO</th>
                 <th class='list-head-content'>LINGUAGEM</th>
-                <th class='list-head-content'>CRIAÇÃO</th>
-                <th class='list-head-content'>MODIFICAÇÃO</th>
                 <th class='list-head-content'>AÇÔES</th>
             </tr>
         </thead>
-
         <?php
-            try {  
-                //Receber os dados do formulário          
+            try {
+                // BUSCAR DADOS DO BANCO
                 $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-                //echo "<pre>" . print_r($dados, true) . " </pre>";
-
-                if (isset($SESSION['msg'])) {
-                    echo $SESSION['msg'];
-                    unset($SESSION['msg']);
+                // SESSION
+                if(isset($_SESSION['msgs'])){
+                    echo $_SESSION['msgs'];
+                    unset($_SESSION['msgs']);
                 }
-
-                $query_sistemas = "SELECT id, nome, linguagem, descricao, banco_dado_id, created, modified FROM sistemas ORDER BY id DESC";
+                $query_sistemas = ("SELECT sis.id As id_sis, sis.nome, sis.banco_dado_id, sis.linguagem_id, sis.descricao_id, sis.created, sis.modified,
+                        bds.id As id_bds, bds.nome_banco AS nome_banco_bds,
+                        lgm.name AS name_lgm,
+                        dcc.name AS name_dcc
+                        FROM sistemas AS sis
+                        INNER JOIN bancos_dados AS bds ON bds.id=sis.banco_dado_id                                    
+                        INNER JOIN linguagem AS lgm ON lgm.id=sis.linguagem_id                                    
+                        INNER JOIN descricao AS dcc ON dcc.id=sis.descricao_id
+                        ORDER BY id_sis DESC");
                 $result_sistemas = $conn->prepare($query_sistemas);
                 $result_sistemas->execute();
             } catch (PDOException $erro) {
                 echo "<p style='color: yellow;'>Erro gerado: </p>";
                 //echo "<p style='color: yellow;'>Erro gerado: " . $erro->getMessage() . " </p>";
               }
-
             while($row_sistema = $result_sistemas->fetch(PDO::FETCH_ASSOC)){
                 //echo "<pre>".print_r($row_sistema, true)."</pre>";
                 extract($row_sistema);
-
                 echo "<tbody class='list-body'>";
                     echo "<tr>";
-                        echo "<td name='id_usuario'>$id</td>";
+                        echo "<td name='id_usuario'>$id_sis</td>";
                         echo "<td>$nome</td>";
-                        echo "<td>$banco_dado_id</td>";
-                        echo "<td>$descricao</td>";
-                        echo "<td>$linguagem</td>";
-                        echo "<td>" . date('d/m/Y H:i:s', strtotime($created)) ." </td>";
-                        echo "<td>" . date('d/m/Y H:i:s', strtotime($modified)) . "</td>";
+                        echo "<td>$nome_banco_bds</td>";
+                        echo "<td>$name_dcc</td>";
+                        echo "<td>$name_lgm</td>";
                         echo "<td class='btn-acoes'>";
-                            echo "<a href='cadastro-sis.php?id_usuario=$id'><button class='btn-editar'><img src='img/icones/adicionar-usuáriov.png' title='Cadastrar novo Sistema' alt='Cadastrar novo Sistema'></button></a>";
-                            echo "<a href='editar-sis.php?id_usuario=$id'><button class='btn-editar'><img src='img/icones/editar-fille.png' title='Editar novo Sistema' alt='Editar novo Sistema'></button></a>";
-                            echo "<a href='apagar-sis.php?id_usuario=$id'><button class='btn-editar'><img src='img/icones/excluir-fille.png' title='Excluir Sistema' alt='Cadastrar novo Sistema'></button></a>";
+                            echo "<a href='cadastro-sis.php'><button class='btn-editar'><img src='img/icones/adicionar-usuáriov.png' title='Cadastrar novo Sistema' alt='Cadastrar novo Sistema'></button></a>";
+                            echo "<a href='editar-sis.php?id_usuario=$id_sis'><button class='btn-editar'><img src='img/icones/editar-fille.png' title='Editar novo Sistema' alt='Editar novo Sistema'></button></a>";
+                            echo "<a href='apagar-sis.php?id_usuario=$id_sis' . onclick='return confirm(\"Tem certeza que deseja excluir este registro?\")'><button class='btn-editar'><img src='img/icones/excluir-fille.png' title='Excluir Sistema' alt='Cadastrar novo Sistema'></button></a>";
                         echo "</td>";
                     echo "</tr>";
                 echo "</tbody>";
