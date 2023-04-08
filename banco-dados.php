@@ -19,6 +19,7 @@
 <body>
     <h1 class="animacao-">InfoBankData!</h1>
     <h2 class="animacao-">Bancos de Dados</h2>
+    <img src="img/database.png" alt="Banco de dados" width="180" height="110">
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>

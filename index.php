@@ -19,6 +19,7 @@
 <body>
     <h1 class="animacao-">InfoBankData!</h1>
     <h2 style="text-align: center;" class="animacao-1">Sistemas e Bancos de Dados</h2>
+    <img src="img/sis-ban.png" alt="Sistemas e Banco de dados" width="200" height="100">
     
     <nav class="nav">
         <a><button class="btn-index active">Home</button></a>

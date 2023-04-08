@@ -19,6 +19,7 @@
 
     <h1 class="animacao-">InfoBankData!</h1>
     <h2 class="animacao-">Cadastro de Sistema</h2>
+    <img src="img/sistemas.png" alt="sistemas" width="200" height="100">
     <p>Campos que  contém (<span class="campo-obrigatorio">*</span>) são obrigatórios.</p>
     
     <nav class="nav">

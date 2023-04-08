@@ -19,6 +19,7 @@
 <body class="body-ajust body-cad">
     <h1 class="animacao-">InfoBankData!</h1>
     <h2 class="animacao-">Cadastrar banco de dado</h2>
+    <img src="img/database.png" alt="Banco de dados" width="180" height="110">
     <p>Campos que  contém (<span class="campo-obrigatorio">*</span>) são obrigatórios.</p>
     
     <nav class="nav">

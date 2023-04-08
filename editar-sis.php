@@ -20,6 +20,7 @@
 
     <h1 class="animacao-">InfoBankData!</h1>
     <h2 class="animacao-">Editar dados do Sistema</h2> 
+    <img src="img/sistemas.png" alt="sistemas" width="200" height="100">
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>

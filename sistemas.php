@@ -13,11 +13,12 @@
     <meta name="keywords" content="informacao do sistema">
     <link rel="stylesheet" href="css/style.css">
     <title>Sistemas</title>
-    <link rel="shortcut icon" href="img/favicon.ico" type="imagem do icone">
+    <link rel="shortcut icon" href="img/sistemas/favicon.ico" type="imagem do icone">
 </head>
 <body>
     <h1 class="animacao-">InfoBankData!</h1>
     <h2 class="animacao-">Sistemas Desenvolvidos</h2>
+    <img src="img/sistemas.png" alt="sistemas" width="200" height="100">
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>

@@ -18,6 +18,7 @@
 <body class="body-ajust">
     <!--<h1 class="animacao-1">InfoBankData!</h1>-->
     <h1 class="animacao-">Pesquisar Sistemas</h1>
+    <img src="img/sistemas.png" alt="sistemas" width="200" height="100">
     
     <nav class="nav">
         <a href="index.php"><button class="btn-index">Home</button></a>
